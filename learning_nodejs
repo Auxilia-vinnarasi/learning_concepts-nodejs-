@@ -1,0 +1,295 @@
+MONGODB_URL=mongodb+srv://john:john123@cluster0.bg8rf.mongodb.net/nodejs_auth?retryWrites=true&w=majority
+OR
+mongodb://localhost:27017/ecom_test
+????????????????????????????????????????????????????????????????
+npm init -y
+npm install express mongoose dotenv 
+npm install nodemon --save -dev
+
+server.js
+const mongoose=require("mongoose");
+require("dotenv/config");
+const app=require("./app");
+
+mongoose.connect(process.env.MONGODB_URI,{
+            useNewUrlParser:true,
+            useUnifiedTopology:true,
+})
+.then(()=>console.log("Mongodb connected successfully.."))
+.catch(()=>console.log("MongoDb not connected successfully..."))
+
+const PORT=process.env.PORT || 3000;
+
+app.listen(PORT,()=>{
+    console.log(`App is listening on port ${PORT}`);
+});
+
+app.js
+const express=require("express");
+const cors=require("cors");
+const bodyParser=require("body-parser");
+const cookieParser=require("cookie-parser")
+const app=express();
+
+const userRouter=require("./Routers/userRouter");
+const productRouter=require("./Routers/productRouter");
+const categoryRouter=require("./Routers/categoryRouter");
+const cartRouter=require("./Routers/cartRouter");
+const orderRouter=require("./Routers/orderRouter");
+//const cartRouter=require("./Routers/cartRouter");
+//const itemRouter=require("./Routers/itemRouter");
+
+//middleware
+app.use(express.json());
+app.use(cors("corsOptions"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(cookieParser());
+
+//we have to set the endpoints so that any req coming with 
+//the url/api this can be send to this user,product,category,cart, order route.
+app.use("/api/user",userRouter);
+app.use("/api/product",productRouter);
+app.use("/api/category",categoryRouter);
+app.use("/api/cart",cartRouter);
+app.use("/api/order",orderRouter);
+
+app.get("/",(req,res)=>{
+    res.send("E-commerce website creation in backend...")
+});
+module.exports=app;
+
+Routers=>cartRouter.js
+const router=require("express").Router();
+//router or routing: it refers to how the applications endpoint refers to client request.
+const cartController=require("../controllers/cartController");
+
+router.post("/create_cart",cartController.createCart);
+router.put("/updatecart/:id",cartController.updateCart);
+router.get("/getallprod",cartController.getAllProd);
+router.delete("/deletecart/:id",cartController.deleteCart);
+router.get("/getusercart/:userId",cartController.getUserCart);
+
+module.exports=router;
+???????????????????????????????????????????????????????????????????????
+server.js
+
+require("dotenv").config({path:"./config.env"})
+
+const express=require("express");
+const connectDB=require("./config/db");
+
+//connect DB
+connectDB();
+
+const app=express();
+
+//this is the middleware which is allows us to get the data from the body (ie) req.body
+app.use(express.json());
+
+app.use("/api/auth",require("./routes/auth"));
+
+const PORT=process.env.PORT || 5000;
+
+//get request for checking server
+app.get("/",(req,res)=>{
+    res.send("App is working ....")
+})
+
+ const server=app.listen(PORT,()=>{
+    console.log(`App is listening on port ${PORT}`);
+})
+
+//for nicely done error im creating this
+process.on("unhandledRejection",(err,promise)=>{
+    console.log(`Logged Error:${err}`);
+    server.close(()=>process.exit(1));
+})
+
+routes=>auth.js
+const express=require("express");
+const router=express.Router();
+
+const {register, login, forgotPassword, resetPassword}=require("../controllers/auth");
+
+router.route("/register").post(register);
+
+//router.post("/register",)
+router.route("/login").post(login);
+
+router.route("/forgotpassword").post(forgotPassword);
+
+router.route("/resetpassword/:resetToken").put(resetPassword);
+
+module.exports=router;
+???????????????????????????????????????????????????????????????????
+JWT - random digits for secrets:
+in node cmd we have to run below commands
+require("crypto").randomBytes(35).toString("hex")//because its gonna written buffer so that toString
+adadaodkoweirgdmsdmg4535232323121290sdlskdlsk;dl;
+????????????????????????????????????????????????????????????????????
+Pushing Git commands
+Go to that project page and write click git bash 
+1>$git init
+2>git add .
+3>git status
+4>git commit -m "first commit"
+5>gir remote add origin https://github.com/
+6>git push -u origin master
+Then it is created
+if it's remote origin already exits: ERROR
+1>git remote --verbose
+2>git remote set-url origin http://
+3>git remote --verbose
+4>git add .
+5>git commit -m "first commit"
+6>git push origin master
+if we give git add . =>warning=>It will be replaced by CRLF in the file
+solution==>git config core.autocrlf true
+?????????????
+///On branch master nothing to commit, working directory clean"
+(1) rm -rf .git/
+(2) git init
+3>git add .
+4>git status
+5>git commit -m "first commit"
+6>gir remote add origin https://github.com/
+7>git push -u origin master
+????????????????????????????????????????????????????????????????????????????
+mongodb Dump:
+download:https://www.mongodb.com/try/download/database-tools?tck=docs_databasetools
+cmd:==>1>set path="C:\Program Files\MongoDB\Server\6.0\bin"
+==>2>mongodump
+mongodump --uri=mongodb+srv://xxx:yyy@cluster0-whatever.mongodb.net
+?????????????????????????????????????????????????????????????????????????????
+javascript functions:
+array.map() is returning elements all together in React JS
+const Test=()=>{
+const array=["Hello","Mynameis"]
+return (<>
+{
+array.map((arr)=>{
+return( <>
+<div>{arr}</div>
+<buttn>Edit</div>
+</>
+)
+})
+}
+</>
+)
+}
+??????????????????????????????????????????????????????
+function App() {
+  const array = ['hello', 'myNameIs'];
+  return array.map(item => (
+    <div key={item}>
+      {item} <button>Edit</button>
+    </div>
+  ));
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
+??????????????????????????????????????????????????????
+Purpose of Middlewares:
+The main purpose of the middleware is to modify the req and res objects,
+and then compile and execute any code that is required. 
+???????????????????????????????????????????????????????
+for(i=1;i<=100;i++){
+   if(i%3 && i%5){
+       console.log(i);
+   }
+   else{
+       if(i%3==0){
+           console.log(i,"three");
+       }
+       if(i%5==0){
+           console.log(i,"five");
+       }
+   }
+}
+????????????????????????????????????????????????????????????????????????????
+nodejs-postgressql-express:
+1.search==>sql shell will open.....psql...enter...
+2.password:password..
+3.\conninfo
+4.\l
+5.CREATE DATABASE students;
+6.\c students;----for connecting the database;
+7.\! cls...for clearing
+8.CREATE TABLE students(
+students(# ID SERIAL PRIMARY KEY,
+students(# name VARCHAR(255),
+students(# email VARCHAR(255),
+students(# age INT,
+students(# dob DATE);
+CREATE TABLE
+Now created table...
+9.for display table:
+\dt
+10.INSERT INTO students (name,email,age,dob) 
+//enter
+ VALUES ('Joe','joe@gmail.com',48,'1973-04-04'),('Auxi','auxi@gmail.com',31,'1991-07-06');
+                    postgres automatically calculate id...
+
+12.SELECT * FROM students;
+?????????????????????????????????????????????????????????????????????????
+nodejs--->cmd
+const fs=require("fs");
+fs enter-->u can able to see so many functionalities in that in-built library..
+??????????????????????????????????????????????????????????????????????????????????
+nestJs:
+1>npm i -g @nestjs/cli
+2>nest new nestjs_mongoose_crud
+3>cd nestjs_mongoose_crud
+4>npm run start:dev
+5>Now check in localhost:3000/
+6>npm i @nestjs/mongoose mongoose
+7>app.modules.ts
+import { MongooseModule } from '@nestjs/mongoose';
+imports: [
+    MongooseModule.forRoot('mongodb://0.0.0.0:27017',{dbName: 'nestmongoose_student'})
+  ],
+8>creating the Schema in MongoDB:
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
+@Schema()
+export class Student {
+   @Prop()
+   name: string;
+   @Prop()
+   roleNumber: number;
+   @Prop()
+   class: number;
+}
+export const StudentSchema=SchemaFactory.createForClass(Student);
+9>we need to register this student schema in root file which is app.module.ts
+import { StudentSchema } from './schema/student.schema';
+MongooseModule.forFeature([{name:"Student",schema:StudentSchema}])
+10>needs to create the interface of student model in mongodb.
+import { Document } from 'mongoose';
+export interface IStudent extends Document {
+  readonly name: string;
+  readonly roleNumber: number;
+  readonly class: number;
+  readonly gender: string;
+  readonly marks: number;
+}
+u can see inside this interface all the fields are readonly and we cant modify....here we are telling how the fields will look like..
+11> npm i class-validator
+12>npm i class-transformer
+13>npm i @netsjs/mapped-types
+14>create dto's -create-student.dto.ts,update-student.dto.ts...
+15>for above validations to work we need to register globally for that main.ts
+16> main.ts: import { ValidationPipe } from '@nestjs/common';
+  app.useGlobalPipes(new ValidationPipe());
+17>we will be creating the service which will be the interface between the req made to the nestjs app and the db.
+18>nest generate service student
+19>In student service.ts:
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { IStudent } from 'src/interface/student.interface';
+simple constructor here inside this service..in this we are importing model,interface and also injectable from nestjs.
+constructor(@InjectModel('Student') private studentModel: Model<IStudent>) {}
+20>create student,getAllstudents 
+21>creating the controllers: nest generate controller student
+
