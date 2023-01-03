@@ -191,6 +191,18 @@ function App() {
 
 ReactDOM.render(<App />, document.getElementById("root"));
 ??????????????????????????????????????????????????????
+JSON.parse()-->It takes an JSON string and transforms into js object
+const userStr={"user":"AUxi","location":"chennai"}
+json.parse(userStr)
+output==>{user:"Auxi",location:"chennai"}
+user:"Auxi"
+location:"chennai"
+>>>>>>>>>>>>>>>>>>>>>>>//////////////////////////////////
+Json.stringify()--->it takes js obj and transforms into JSON string
+const userObj={user:"Auxi",location:"chennai"}
+json.stringify(userObj);
+output-=====>{"user":"Auxi","location":"chennai"}
+//////////////////////////////////////////////////////////////
 Purpose of Middlewares:
 The main purpose of the middleware is to modify the req and res objects,
 and then compile and execute any code that is required. 
