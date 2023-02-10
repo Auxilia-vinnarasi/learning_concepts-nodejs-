@@ -262,7 +262,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 imports: [
     MongooseModule.forRoot('mongodb://0.0.0.0:27017',{dbName: 'nestmongoose_student'})
   ],
-8>creating the Schema in MongoDB:
+8>creating the Schema in MongoDB:schema/student.schema.ts
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose"
 @Schema()
 export class Student {
