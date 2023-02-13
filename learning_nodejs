@@ -277,7 +277,7 @@ export const StudentSchema=SchemaFactory.createForClass(Student);
 9>we need to register this student schema in root file which is app.module.ts
 import { StudentSchema } from './schema/student.schema';
 MongooseModule.forFeature([{name:"Student",schema:StudentSchema}])
-10>needs to create the interface of student model in mongodb.
+10>needs to create the interface of student model in mongodb. interface/student.interface.ts
 import { Document } from 'mongoose';
 export interface IStudent extends Document {
   readonly name: string;
