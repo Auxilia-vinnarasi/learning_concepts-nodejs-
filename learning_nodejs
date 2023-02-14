@@ -304,4 +304,6 @@ simple constructor here inside this service..in this we are importing model,inte
 constructor(@InjectModel('Student') private studentModel: Model<IStudent>) {}
 20>create student,getAllstudents 
 21>creating the controllers: nest generate controller student
+
 NextJs: npm run dev.............Nest js:npm run start:dev
+cd src--->nest g module user.....>refer nestjsmodel and nextjsmodel
