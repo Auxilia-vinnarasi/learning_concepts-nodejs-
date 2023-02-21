@@ -146,6 +146,17 @@ if it's remote origin already exits: ERROR
 6>git push origin master
 if we give git add . =>warning=>It will be replaced by CRLF in the file
 solution==>git config core.autocrlf true
+????????????????????????????????????
+create new branch and work with that branch means:
+git branch Auxilia
+ git branch --list
+ Auxilia
+ * main
+ git checkout Auxilia
+ git branch --list
+ * Auxilia
+ main
+ now we can work .....
 ?????????????
 ///On branch master nothing to commit, working directory clean"
 (1) rm -rf .git/
